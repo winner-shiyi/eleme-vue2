@@ -16,7 +16,7 @@
         <li v-for="item in goods" class="food-list food-list-hook">
           <h1 class="title">{{item.name}}</h1>
           <ul>
-            <li v-for="food in item.foods" class="food-item border-1px-bottom">
+            <li @click="selectFood3(food,$event)" v-for="food in item.foods" class="food-item border-1px-bottom">
               <div class="icon">
                 <img :src="food.icon" alt="" width="57" height="57">
               </div>
@@ -42,14 +42,16 @@
     </div>
     <!--购物车-->
     <v-shopcart v-ref:shopcart :select-foods="selectFoods" :delivery-price="sellerCon.deliveryPrice" :min-price="sellerCon.minPrice"></v-shopcart>
-
   </div>
+  <!--商品详情页-->
+  <v-food :food="selectFood2" v-ref:foodfun></v-food>
 </template>
 
 <script>
 import BScroll from 'better-scroll'
 import shopcart from 'components/shopcart/shopcart'
 import cartcontrol from 'components/cartcontrol/cartcontrol'
+import food from 'components/food/food'
 const ERR_OK = 0
 export default {
   props: {
@@ -61,7 +63,8 @@ export default {
     return {
       goods: [],
       listHeight: [],
-      scrollY: 0
+      scrollY: 0,
+      selectFood2: {}
     }
   },
   computed: {
@@ -108,6 +111,11 @@ export default {
       let el = foodList[index]
       this.foodsScroll.scrollToElement(el, 300)
     },
+    selectFood3 (food, event) {
+      if (!event._constructed) { return }
+      this.selectFood2 = food
+      this.$refs.foodfun.show()
+    },
     _drop (target) {
       // 体验优化，异步执行下落动画
       this.$nextTick(() => {
@@ -139,7 +147,8 @@ export default {
   },
   components: {
     'v-shopcart': shopcart,
-    'v-cartcontrol': cartcontrol
+    'v-cartcontrol': cartcontrol,
+    'v-food': food
   },
   events: {
     'cart.add' (target) {

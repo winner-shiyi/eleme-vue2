@@ -11,7 +11,7 @@
          <div class="price" :class="{'highlight':totalPrice>0}">¥{{totalPrice}}</div>
          <div class="desc">另需配送费¥{{deliveryPrice}}元</div>
       </div>
-      <div class="content-right" @click="pay">
+      <div class="content-right" @click.prevent="pay">
         <div class="pay" :class="payClass">{{payDesc}}</div>
       </div>
       <div class="ball-container">
