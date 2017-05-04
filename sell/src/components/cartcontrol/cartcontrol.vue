@@ -61,7 +61,7 @@ export default {
           transform:rotate(0)
         }
       }
-      &.move-enter,&.move-leave{
+      &.move-enter,&.move-leave{ 
         opacity:0
         transform:translate3d(24px,0,0)
         .inner{
