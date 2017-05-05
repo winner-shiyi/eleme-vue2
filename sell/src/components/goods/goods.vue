@@ -41,7 +41,7 @@
       </ul>
     </div>
     <!--购物车-->
-    <v-shopcart :delivery-price="sellerCon.deliveryPrice" :min-price="sellerCon.minPrice"></v-shopcart>
+    <v-shopcart :select-foods="selectFoods" :delivery-price="sellerCon.deliveryPrice" :min-price="sellerCon.minPrice"></v-shopcart>
 
   </div>
 </template>
@@ -74,6 +74,17 @@ export default {
         }
       }
       return 0
+    },
+    selectFoods () {
+      let foods = []
+      this.goods.forEach((good) => {
+        good.foods.forEach((food) => {
+          if (food.count) {
+            foods.push(food)
+          }
+        })
+      })
+      return foods
     }
   },
   created () {
@@ -254,7 +265,7 @@ export default {
           .cartcontrol-wrapper{
             position:absolute
             right:0
-            bottom:18px
+            bottom:10px
           }
         }
       }
