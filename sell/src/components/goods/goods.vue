@@ -30,6 +30,10 @@
                   <span class="now">¥{{food.price}}</span>
                   <span class="old" v-show="food.oldPrice">¥{{food.oldPrice}}</span>
                 </div>
+                <!--购物车控件-增减按钮-->
+                <div class="cartcontrol-wrapper">
+                  <v-cartcontrol :food="food"></v-cartcontrol>
+                </div>
               </div>
             </li>
           </ul>
@@ -45,6 +49,7 @@
 <script>
 import BScroll from 'better-scroll'
 import shopcart from 'components/shopcart/shopcart'
+import cartcontrol from 'components/cartcontrol/cartcontrol'
 const ERR_OK = 0
 export default {
   props: {
@@ -97,6 +102,7 @@ export default {
         click: true
       })
       this.foodsScroll = new BScroll(this.$els.foodsWrapper, {
+        click: true,
         probeType: 3
       })
       this.foodsScroll.on('scroll', (position) => {
@@ -115,7 +121,8 @@ export default {
     }
   },
   components: {
-    'v-shopcart': shopcart
+    'v-shopcart': shopcart,
+    'v-cartcontrol': cartcontrol
   }
 }
 </script>
@@ -243,6 +250,11 @@ export default {
               font-size:10px
               color:rgb(147,153,159)
             }
+          }
+          .cartcontrol-wrapper{
+            position:absolute
+            right:0
+            bottom:18px
           }
         }
       }
