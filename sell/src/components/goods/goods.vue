@@ -36,11 +36,15 @@
         </li>
       </ul>
     </div>
+    <!--购物车-->
+    <v-shopcart :delivery-price="sellerCon.deliveryPrice" :min-price="sellerCon.minPrice"></v-shopcart>
+
   </div>
 </template>
 
 <script>
 import BScroll from 'better-scroll'
+import shopcart from 'components/shopcart/shopcart'
 const ERR_OK = 0
 export default {
   props: {
@@ -109,6 +113,9 @@ export default {
         this.listHeight.push(height)
       }
     }
+  },
+  components: {
+    'v-shopcart': shopcart
   }
 }
 </script>
