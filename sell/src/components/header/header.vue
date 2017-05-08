@@ -37,6 +37,20 @@
       <div class="detail-wrapper clearfix">
         <div class="detail-main">
          <h1 class="name">{{sellerCon.name}}</h1>
+         <div class="star-wrapper">
+          <v-star :size="48" :score="sellerCon.score"></v-star>
+         </div>
+         <div class="title">
+           <div class="line"></div>
+           <div class="text">优惠信息</div>
+           <div class="line"></div>
+         </div>
+         <ul v-if="sellerCon.supports" class="supports">
+          <li class="support-item" v-for="item in sellerCon.supports">
+            <span class="icon" :class="classMap[sellerCon.supports[$index].type]"></span>
+            <span class="text">{{sellerCon.supports[$index].description}}</span>
+          </li>
+         </ul>
         </div>
       </div>
       <div class="detail-close">
@@ -47,6 +61,8 @@
 </template>
 
 <script>
+import star from 'components/star/star'
+
 export default {
   props: {
     sellerCon: {
@@ -65,6 +81,9 @@ export default {
   },
   created () {
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
+  },
+  components: {
+    'v-star': star
   }
 }
 </script>
@@ -226,6 +245,27 @@ export default {
           text-align:center
           font-size:16px
           font-weight:700
+        }
+        .star-wrapper{
+          margin-top:16px
+          padding:2px 0
+          text-align:center
+        }
+        .title{
+          display:flex
+          width:80%
+          margin:28px auto 24px
+          .line{
+            flex:1
+            position:relative
+            top:-6px
+            border-bottom:1px solid rgba(255,255,255,.2)
+          }
+          .text{
+            padding:0 12px
+            font-size:14px
+            font-weight:700
+          }
         }
       }
       .detail-close{
