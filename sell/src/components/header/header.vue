@@ -18,13 +18,31 @@
           <span class="text">{{sellerCon.supports[0].description}}</span>
         </div>
       </div>
-      <div v-if="sellerCon.supports" class="support-count">
+      <div v-if="sellerCon.supports" class="support-count" @click="showDetail">
         <span class="count">{{sellerCon.supports.length}}</span>
         <i class="icon-keyboard_arrow_right"></i>
       </div>
     </div>
 
-    <div class="bulletin-wrapper"></div>
+    <div class="bulletin-wrapper" @click="showDetail">
+      <span class="bulletin-title"></span><span class="bulletin-text">{{sellerCon.bulletin}}</span>
+      <i class="icon-keyboard_arrow_right"></i>
+    </div>
+    
+    <div class="background">
+      <img :src="sellerCon.avatar" alt="" width="100%" height="100%">
+    </div>
+
+    <div class="detail" v-show="detailShow">
+      <div class="detail-wrapper clearfix">
+        <div class="detail-main">
+         <h1 class="name">{{sellerCon.name}}</h1>
+        </div>
+      </div>
+      <div class="detail-close">
+        <i class="icon-close"></i>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -33,6 +51,16 @@ export default {
   props: {
     sellerCon: {
       type: Object
+    }
+  },
+  data () {
+    return {
+      detailShow: false
+    }
+  },
+  methods: {
+    showDetail () {
+      this.detailShow = true
     }
   },
   created () {
@@ -46,8 +74,10 @@ export default {
 
 
   .header{
+    position:relative
     color:#fff
-    background:#999
+    background:rgba(7,17,27,.5)
+    overflow:hidden
     .content-wrapper{
       position:relative
       padding:24px 12px 18px 24px
@@ -75,7 +105,7 @@ export default {
             vertical-align:top
             width:30px
             height:18px
-            bd-image('brand')
+            bg-image('brand')
             background-size:30px 18px 
             background-repeat:no-repeat 
           }
@@ -95,19 +125,19 @@ export default {
            background-size:12px 12px
            background-repeat:no-repeat
            &.decrease{
-             bd-image('decrease_1')
+             bg-image('decrease_1')
            }
            &.discount{
-             bd-image('discount_1')
+             bg-image('discount_1')
            }
            &.guarantee{
-             bd-image('guarantee_1')
+             bg-image('guarantee_1')
            }
            &.invoice{
-             bd-image('invoice_1')
+             bg-image('invoice_1')
            }
            &.special{
-             bd-image('special_1')
+             bg-image('special_1')
            }
          }
          .text{
@@ -136,6 +166,76 @@ export default {
          font-size:10px
        }
      }
+    }
+    .bulletin-wrapper{
+      position:relative
+      height:28px
+      line-height:28px
+      padding:0 22px 0 12px
+      white-space:nowrap
+      overflow:hidden
+      text-overflow:ellipsis
+      background:rgba(7,17,27,.2)
+      .bulletin-title{
+        display:inline-block
+        vertical-align:middle
+        width:22px
+        height:12px
+        bg-image('bulletin')
+        background-size:22px 12px
+        background-repeat:no-repeat
+      }
+      .bulletin-text{
+        margin:0 4px
+        font-size:10px
+      }
+      .icon-keyboard_arrow_right{
+         position:absolute
+         right:12px
+         top:9px
+         font-size:10px
+       }
+    }
+    .background{
+      position:absolute
+      top:0
+      left:0
+      width:100%
+      height:100%
+      z-index:-1
+      filter:blur(10px)
+    }
+    .detail{
+      position:fixed
+      top:0
+      left:0
+      z-index:100
+      width:100%
+      height:100%
+      overflow:auto
+      background:rgba(7,17,27,.8)
+      .detail-wrapper{
+        min-height:100%
+        width:100%
+        .detail-main{
+          margin-top:64px
+          padding-bottom:64px
+        }
+        .name{
+          line-height:16px
+          text-align:center
+          font-size:16px
+          font-weight:700
+        }
+      }
+      .detail-close{
+        position:relative
+        width:32px
+        height:32px
+        margin:-64px auto 0
+        clear:both
+        font-size:32px
+      }
     }
   }
 </style>
