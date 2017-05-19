@@ -1147,7 +1147,6 @@
       "deliveryTime": "",
       "score": 4,
       "rateType": 0,
-      "deliveryTime": "",
       "text": "服务态度不错",
       "avatar": "http://static.galileo.xiaojukeji.com/static/tms/default_header.png",
       "recommend": [
@@ -1157,6 +1156,7 @@
     {
       "username": "3******b",
       "rateTime": 1469261964000,
+      "deliveryTime": "",
       "score": 3,
       "rateType": 1,
       "text": "",

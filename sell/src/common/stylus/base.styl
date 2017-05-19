@@ -21,12 +21,26 @@ body,html{
       transform:scaleY(.7)
     }
   }
+  .border-1px-left,.border-1px-after{
+    &::after{
+      -weibkit-transform:scaleX(.7)
+      transform:scaleX(.7)
+    }
+  }
 }
+
+
 @media (-webkit-min-device-pixel-ratio:2),(min-device-pixel-ratio:2){
   .border-1px-top,.border-1px-bottom{
     &::after{
       -weibkit-transform:scaleY(.5)
       transform:scaleY(.5)
+    }
+  }
+  .border-1px-left,.border-1px-after{
+    &::after{
+      -weibkit-transform:scaleX(.5)
+      transform:scaleX(.5)
     }
   }
 }
