@@ -86,7 +86,7 @@ export default {
       .remark{
         display:flex
         padding-top:18px
-        .block{
+        .block{ 
           flex:1
           text-align:center
           border-right:1px solid rgba(7,17,27,.1)
