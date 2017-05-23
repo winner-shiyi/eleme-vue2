@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-header :seller-con="seller"></v-header>
-    <div class="tab border-1px-bottom">
+    <div class="tab border-1px">
       <div class="tab-item">
         <a v-link="{path:'/goods'}">商品</a>
       </div>
@@ -16,32 +16,36 @@
   </div>
 </template>
 
-<script>
-  import header from 'components/header/header'
+<script type="text/ecmascript-6">
+  import {urlParse} from 'common/js/util'
+  import header from 'components/header/header.vue'
 
   const ERR_OK = 0
 
   export default {
     data () {
       return {
-        seller: {}
+        seller: {
+          id: (() => {
+            let queryParam = urlParse()
+            return queryParam.id
+          })()
+        }
       }
     },
     created () {
-      this.$http.get('/api/seller').then(res => {
-        res = res.body
-        if (res.errno === ERR_OK) {
-          this.seller = res.data
-          // console.log(this.seller)
+      this.$http.get('/api/seller?id=' + this.seller.id).then((response) => {
+        response = response.body
+        if (response.errno === ERR_OK) {
+          this.seller = Object.assign({}, this.seller, response.data)
         }
-      }, err => {
-        console.log(err)
       })
     },
     components: {
       'v-header': header
     }
   }
+
 </script>
 
 <style lang="stylus">

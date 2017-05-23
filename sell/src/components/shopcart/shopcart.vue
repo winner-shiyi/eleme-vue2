@@ -11,32 +11,32 @@
          <div class="price" :class="{'highlight':totalPrice>0}">¥{{totalPrice}}</div>
          <div class="desc">另需配送费¥{{deliveryPrice}}元</div>
       </div>
-      <div class="content-right" @click.prevent="pay">
+      <div class="content-right" @click.stop.prevent="pay">
         <div class="pay" :class="payClass">{{payDesc}}</div>
+      </div>  
+    </div>
+    <div class="ball-container">
+      <div transition="drop" v-for="ball in balls" v-show="ball.show" class="ball">
+        <div class="inner inner-hook"></div>
       </div>
-      <div class="ball-container">
-        <div transition="drop" v-for="ball in balls" v-show="ball.show" class="ball">
-          <div class="inner inner-hook"></div>
-        </div>
+    </div>
+    <div class="shopcart-list" v-show="listShow" transition="fold">
+      <div class="list-header">
+        <div class="title">购物车</div>
+        <span class="empty" @click="empty">清空</span>
       </div>
-      <div class="shopcart-list" v-show="listShow" transition="fold">
-        <div class="list-header">
-          <div class="title">购物车</div>
-          <span class="empty" @click="empty">清空</span>
-        </div>
-        <div class="list-content" v-el:list-content>
-          <ul>
-            <li class="food" v-for="food in selectFoods">
-              <span class="name">{{food.name}}</span>
-              <div class="price">
-                <span>￥{{food.price*food.count}}</span>
-              </div>
-              <div class="cartcontrol-wrapper">
-                <v-cartcontrol :food="food"></v-cartcontrol>
-              </div>
-            </li>
-          </ul>
-        </div>
+      <div class="list-content" v-el:list-content>
+        <ul>
+          <li class="food" v-for="food in selectFoods">
+            <span class="name">{{food.name}}</span>
+            <div class="price">
+              <span>￥{{food.price*food.count}}</span>
+            </div>
+            <div class="cartcontrol-wrapper">
+              <v-cartcontrol :food="food"></v-cartcontrol>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -51,7 +51,12 @@ export default {
     selectFoods: { // 保存的是foods，并每个food增加一个count属性
       type: Array,
       default () {
-        return []
+        return [
+          {
+            price: 10,
+            count: 1
+          }
+        ]
       }
     },
     deliveryPrice: {

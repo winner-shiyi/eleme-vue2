@@ -20,7 +20,7 @@
         <div class="cartcontrol-wrapper">
           <v-cartcontrol :food="food"></v-cartcontrol>
         </div>
-        <div class="buy" v-show="!food.count || food.count===0" @click.stop.prevent="addFirst($event)" transition="fade">加入购物车</div>
+        <div class="buy" v-show="!food.count || food.count===0" @click.stop.prevent="addFirst" transition="fade">加入购物车</div>
       </div>   
       <v-split v-show="food.info"></v-split>
       <!--商品介绍-->

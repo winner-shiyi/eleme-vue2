@@ -16,7 +16,7 @@
         <li v-for="item in goods" class="food-list food-list-hook">
           <h1 class="title">{{item.name}}</h1>
           <ul>
-            <li @click="selectFood3(food,$event)" v-for="food in item.foods" class="food-item border-1px-bottom">
+            <li @click="selectFood(food,$event)" v-for="food in item.foods" class="food-item border-1px-bottom">
               <div class="icon">
                 <img :src="food.icon" alt="" width="57" height="57">
               </div>
@@ -44,7 +44,7 @@
     <v-shopcart v-ref:shopcart :select-foods="selectFoods" :delivery-price="sellerCon.deliveryPrice" :min-price="sellerCon.minPrice"></v-shopcart>
   </div>
   <!--商品详情页-->
-  <v-food :food="selectFood2" v-ref:foodfun></v-food>
+  <v-food :food="selectedFood" v-ref:food></v-food>
 </template>
 
 <script>
@@ -64,7 +64,7 @@ export default {
       goods: [],
       listHeight: [],
       scrollY: 0,
-      selectFood2: {}
+      selectedFood: {}
     }
   },
   computed: {
@@ -92,7 +92,7 @@ export default {
   },
   created () {
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
-    this.$http.get('/api/goods').then(res => {
+    this.$http.get('/api/goods').then((res) => {
       res = res.body
       if (res.errno === ERR_OK) {
         this.goods = res.data
@@ -111,10 +111,10 @@ export default {
       let el = foodList[index]
       this.foodsScroll.scrollToElement(el, 300)
     },
-    selectFood3 (food, event) {
+    selectFood (food, event) {
       if (!event._constructed) { return }
-      this.selectFood2 = food
-      this.$refs.foodfun.show()
+      this.selectedFood = food
+      this.$refs.food.show()
     },
     _drop (target) {
       // 体验优化，异步执行下落动画
