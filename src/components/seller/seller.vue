@@ -137,7 +137,7 @@
             if (!this.picScroll) {
               this.picScroll = new BScroll(this.$refs.picWrapper, {
                 scrollX: true,
-                eventPassthrough: 'vertical'
+                eventPassthrough: 'vertical' // 让外层竖向滚动，内存横向滚动
               })
             } else {
               this.picScroll.refresh()

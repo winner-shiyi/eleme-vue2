@@ -61,7 +61,7 @@
 
   export default {
     props: {
-      selectFoods: {
+      selectFoods: { // 保存的是foods，并每个food增加一个count属性
         type: Array,
         default () {
           return [
@@ -100,8 +100,8 @@
             show: false
           }
         ],
-        dropBalls: [],
-        fold: true
+        dropBalls: [],  // 保存已经下落的小球
+        fold: true // 购物车弹窗是否折叠
       }
     },
     computed: {
@@ -209,6 +209,7 @@
         }
       },
       dropping (el, done) {
+         // 主动触发一次浏览器重绘 这个rf变量不会使用
         /* eslint-disable no-unused-vars */
         let rf = el.offsetHeight
         this.$nextTick(() => {

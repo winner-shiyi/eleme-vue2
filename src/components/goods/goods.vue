@@ -98,7 +98,7 @@
         response = response.body
         if (response.errno === ERR_OK) {
           this.goods = response.data
-          this.$nextTick(() => {
+          this.$nextTick(() => { // 保证在dom更新以后
             this._initScroll()
             this._calculateHeight()
           })
@@ -144,7 +144,7 @@
           this.scrollY = Math.abs(Math.round(pos.y))
         })
       },
-      _calculateHeight () {
+      _calculateHeight () { // 获取右侧商品 每一组的高度
         let foodList = this.$refs.foodList
         let height = 0
         this.listHeight.push(height)

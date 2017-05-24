@@ -27,6 +27,7 @@
           return
         }
         if (!this.food.count) {
+          // this.food.count = 1 下面的代码等于这句话
           Vue.set(this.food, 'count', 1)
         } else {
           this.food.count++
