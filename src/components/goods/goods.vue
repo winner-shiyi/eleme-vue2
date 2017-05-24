@@ -5,7 +5,7 @@
         <ul>
           <li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===index}"
               @click="selectMenu(index,$event)">
-          <span class="text border-1px">
+          <span class="text border-1px-bottom">
             <span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span>{{item.name}}
           </span>
           </li>
@@ -16,7 +16,7 @@
           <li v-for="item in goods" class="food-list" ref="foodList">
             <h1 class="title">{{item.name}}</h1>
             <ul>
-              <li @click="selectFood(food,$event)" v-for="food in item.foods" class="food-item border-1px">
+              <li @click="selectFood(food,$event)" v-for="food in item.foods" class="food-item border-1px-bottom">
                 <div class="icon">
                   <img width="57" height="57" :src="food.icon">
                 </div>

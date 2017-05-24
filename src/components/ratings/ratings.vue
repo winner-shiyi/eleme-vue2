@@ -29,7 +29,7 @@
                     :ratings="ratings"></ratingselect>
       <div class="rating-wrapper">
         <ul>
-          <li v-for="rating in ratings" v-show="needShow(rating.rateType, rating.text)" class="rating-item">
+          <li v-for="rating in ratings" v-show="needShow(rating.rateType, rating.text)" class="rating-item border-1px-bottom">
             <div class="avatar">
               <img width="28" height="28" :src="rating.avatar">
             </div>
@@ -204,7 +204,7 @@
             font-size:12px
             color:rgb(7,17,27)
           }
-          .time{
+          .delivery{
             margin-left:12px
             font-size:12px
             color:rgb(147,153,159)
@@ -212,7 +212,7 @@
         }
       }
     }
-    .ratings-wrapper{
+    .rating-wrapper{
       padding:0 18px
       .rating-item{
         display:flex

@@ -1,6 +1,6 @@
 <template>
   <transition name="move">
-    <div v-show="showFlag" class="food" ref="food">
+    <div v-show="showFlag" class="food-component" ref="food">
       <div class="food-content">
         <div class="image-header">
           <img :src="food.image">
@@ -40,7 +40,7 @@
           <div class="rating-wrapper">
             <ul v-show="food.ratings && food.ratings.length">
               <li v-show="needShow(rating.rateType,rating.text)" v-for="rating in food.ratings"
-                  class="rating-item border-1px">
+                  class="rating-item border-1px-bottom">
                 <div class="user">
                   <span class="name">{{rating.username}}</span>
                   <img class="avatar" width="12" height="12" :src="rating.avatar">
@@ -155,7 +155,7 @@
 <style lang="stylus">
   @import "../../common/stylus/mixin.styl"
 
-  .food{
+  .food-component{
     position:fixed
     left:0
     top:0

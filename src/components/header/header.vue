@@ -288,7 +288,7 @@
         .supports{
           width:80%
           margin:0 auto
-          .supports-item{
+          .support-item{
             padding:0 12px
             margin-bottom:12px
             font-size:0

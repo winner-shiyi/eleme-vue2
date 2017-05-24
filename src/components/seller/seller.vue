@@ -3,26 +3,26 @@
     <div class="seller-content">
       <div class="overview">
         <h1 class="title">{{seller.name}}</h1>
-        <div class="desc border-1px">
+        <div class="desc border-1px-bottom">
           <star :size="36" :score="seller.score"></star>
           <span class="text">({{seller.ratingCount}})</span>
           <span class="text">月售{{seller.sellCount}}单</span>
         </div>
         <ul class="remark">
           <li class="block">
-            <h2>起送价</h2>
+            <h1>起送价</h1>
             <div class="content">
               <span class="stress">{{seller.minPrice}}</span>元
             </div>
           </li>
           <li class="block">
-            <h2>商家配送</h2>
+            <h1>商家配送</h1>
             <div class="content">
               <span class="stress">{{seller.deliveryPrice}}</span>元
             </div>
           </li>
           <li class="block">
-            <h2>平均配送时间</h2>
+            <h1>平均配送时间</h1>
             <div class="content">
               <span class="stress">{{seller.deliveryTime}}</span>分钟
             </div>
@@ -36,11 +36,11 @@
       <split></split>
       <div class="bulletin">
         <h1 class="title">公告与活动</h1>
-        <div class="content-wrapper border-1px">
+        <div class="content-wrapper border-1px-bottom">
           <p class="content">{{seller.bulletin}}</p>
         </div>
         <ul v-if="seller.supports" class="supports">
-          <li class="support-item border-1px" v-for="(item,index) in seller.supports">
+          <li class="support-item border-1px-bottom" v-for="(item,index) in seller.supports">
             <span class="icon" :class="classMap[seller.supports[index].type]"></span>
             <span class="text">{{seller.supports[index].description}}</span>
           </li>
@@ -59,7 +59,7 @@
       </div>
       <split></split>
       <div class="info">
-        <h1 class="title border-1px">商家信息</h1>
+        <h1 class="title border-1px-bottom">商家信息</h1>
         <ul>
           <li class="info-item" v-for="info in seller.infos">{{info}}</li>
         </ul>
@@ -197,7 +197,7 @@
           text-align:center
           border-right:1px solid rgba(7,17,27,.1)
           &:last-child{
-            border:none
+            border-none()
           }
           h2{
             margin-bottom:4px
@@ -256,12 +256,12 @@
         }
       }
       .supports{
-        .supports-item{
+        .support-item{
           padding:16px 12px
           font-size:0
           border-1px-bottom(rgba(7,17,27,.1))
           &:last-child{
-            border:none
+            border-none()
           }
         }
         .icon{
