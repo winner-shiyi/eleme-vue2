@@ -1,30 +1,30 @@
 <template>
-  <div class="seller" v-el:seller>
+  <div class="seller" ref="seller">
     <div class="seller-content">
       <div class="overview">
-        <h1 class="title">{{sellerCon.name}}</h1>
-        <div class="desc border-1px-bottom">
-          <v-star :size="36" :score="sellerCon.score"></v-star>
-          <span class="text">({{sellerCon.ratingCount}})</span>
-          <span class="text">月售{{sellerCon.sellCount}}单</span>
+        <h1 class="title">{{seller.name}}</h1>
+        <div class="desc border-1px">
+          <star :size="36" :score="seller.score"></star>
+          <span class="text">({{seller.ratingCount}})</span>
+          <span class="text">月售{{seller.sellCount}}单</span>
         </div>
         <ul class="remark">
           <li class="block">
-            <h1>起送价</h1>
+            <h2>起送价</h2>
             <div class="content">
-              <span class="stress">{{sellerCon.minPrice}}</span>元
+              <span class="stress">{{seller.minPrice}}</span>元
             </div>
           </li>
           <li class="block">
-            <h1>商家配送</h1>
+            <h2>商家配送</h2>
             <div class="content">
-              <span class="stress">{{sellerCon.deliveryPrice}}</span>元
+              <span class="stress">{{seller.deliveryPrice}}</span>元
             </div>
           </li>
           <li class="block">
-            <h1>平均配送时间</h1>
+            <h2>平均配送时间</h2>
             <div class="content">
-              <span class="stress">{{sellerCon.deliveryTime}}</span>分钟
+              <span class="stress">{{seller.deliveryTime}}</span>分钟
             </div>
           </li>
         </ul>
@@ -33,120 +33,124 @@
           <span class="text">{{favoriteText}}</span>
         </div>
       </div>
-      <v-split></v-split>
+      <split></split>
       <div class="bulletin">
         <h1 class="title">公告与活动</h1>
-        <div class="content-wrapper border-1px-bottom">
-          <p class="content">{{sellerCon.bulletin}}</p>
+        <div class="content-wrapper border-1px">
+          <p class="content">{{seller.bulletin}}</p>
         </div>
-        <ul v-if="sellerCon.supports" class="supports"> 
-          <li class="supports-item border-1px-bottom" v-for="item in sellerCon.supports">
-            <span class="icon" :class="classMap[sellerCon.supports[$index].type]"></span>
-            <span class="text">{{sellerCon.supports[$index].description}}</span>
+        <ul v-if="seller.supports" class="supports">
+          <li class="support-item border-1px" v-for="(item,index) in seller.supports">
+            <span class="icon" :class="classMap[seller.supports[index].type]"></span>
+            <span class="text">{{seller.supports[index].description}}</span>
           </li>
         </ul>
       </div>
-      <v-split></v-split>
+      <split></split>
       <div class="pics">
         <h1 class="title">商家实景</h1>
-        <div class="pic-wrapper" v-el:pic-wrapper>
-          <ul class="pic-list" v-el:pic-list>
-            <li class="pic-item" v-for="pic in sellerCon.pics">
-              <img :src="pic" alt="" width="120" height="90">
+        <div class="pic-wrapper" ref="picWrapper">
+          <ul class="pic-list" ref="picList">
+            <li class="pic-item" v-for="pic in seller.pics">
+              <img :src="pic" width="120" height="90">
             </li>
           </ul>
         </div>
       </div>
-      <v-split></v-split>
+      <split></split>
       <div class="info">
-        <h1 class="title border-1px-bottom">商家信息</h1>
+        <h1 class="title border-1px">商家信息</h1>
         <ul>
-          <li class="info-item " v-for="info in sellerCon.infos">{{info}}</li>
+          <li class="info-item" v-for="info in seller.infos">{{info}}</li>
         </ul>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-import BScroll from 'better-scroll'
-import {saveToLocal, loadFromLocal} from 'common/js/store'
-import star from 'components/star/star'
-import split from 'components/split/split'
 
-export default {
-  props: {
-    sellerCon: {
-      type: Object
-    }
-  },
-  data () {
-    return {
-      // favorite: false
-      favorite: (() => {
-        return loadFromLocal(this.sellerCon.id, 'favorite', false)
-      })()
-    }
-  },
-  computed: {
-    favoriteText () {
-      return this.favorite ? '已收藏' : '收藏'
-    }
-  },
-  created () {
-    this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
-  },
-  watch: {
-    'sellerCon' () {
-      this._initScroll()
-      this._initPics()
-    }
-  },
-  ready () {
-    this._initScroll()
-    this._initPics()
-  },
-  methods: {
-    toggleFavorite (event) {
-      if (!event._constructed) {
-        return
-      }
-      this.favorite = !this.favorite
-      saveToLocal(this.sellerCon.id, 'favorite', this.favorite)
-    },
-    _initScroll () {
-      if (!this.scroll) {
-        this.scroll = new BScroll(this.$els.seller, {
-          click: true
-        })
-      } else {
-        this.scroll.refresh()
+<script type="text/ecmascript-6">
+  import BScroll from 'better-scroll'
+  import {saveToLocal, loadFromLocal} from 'common/js/store'
+  import star from 'components/star/star'
+  import split from 'components/split/split'
+
+  export default {
+    props: {
+      seller: {
+        type: Object
       }
     },
-    _initPics () {
-      if (this.sellerCon.pics) {
-        let picWidth = 120
-        let margin = 6
-        let width = (picWidth + margin) * this.sellerCon.pics.length - margin
-        this.$els.picList.style.width = width + 'px'
+    data () {
+      return {
+        favorite: (() => {
+          return loadFromLocal(this.seller.id, 'favorite', false)
+        })()
+      }
+    },
+    computed: {
+      favoriteText () {
+        return this.favorite ? '已收藏' : '收藏'
+      }
+    },
+    created () {
+      this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
+    },
+    watch: {
+      'seller' () {
         this.$nextTick(() => {
-          if (!this.picScroll) {
-            this.picScroll = new BScroll(this.$els.picWrapper, {
-              scrollX: true,
-              eventPassthrough: 'vertical' // 让外层竖向滚动，内存横向滚动
-            })
-          } else {
-            this.picScroll.refresh()
-          }
+          this._initScroll()
+          this._initPics()
         })
       }
+    },
+    mounted () {
+      this.$nextTick(() => {
+        this._initScroll()
+        this._initPics()
+      })
+    },
+    methods: {
+      toggleFavorite (event) {
+        if (!event._constructed) {
+          return
+        }
+        this.favorite = !this.favorite
+        saveToLocal(this.seller.id, 'favorite', this.favorite)
+      },
+      _initScroll () {
+        if (!this.scroll) {
+          this.scroll = new BScroll(this.$refs.seller, {
+            click: true
+          })
+        } else {
+          this.scroll.refresh()
+        }
+      },
+      _initPics () {
+        if (this.seller.pics) {
+          let picWidth = 120
+          let margin = 6
+          let width = (picWidth + margin) * this.seller.pics.length - margin
+          this.$refs.picList.style.width = width + 'px'
+          this.$nextTick(() => {
+            if (!this.picScroll) {
+              this.picScroll = new BScroll(this.$refs.picWrapper, {
+                scrollX: true,
+                eventPassthrough: 'vertical'
+              })
+            } else {
+              this.picScroll.refresh()
+            }
+          })
+        }
+      }
+    },
+    components: {
+      star,
+      split
     }
-  },
-  components: {
-    'v-star': star,
-    'v-split': split
   }
-}
 </script>
 
 <style lang="stylus">

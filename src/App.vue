@@ -1,24 +1,26 @@
 <template>
   <div>
-    <v-header :seller-con="seller"></v-header>
+    <v-header :seller="seller"></v-header>
     <div class="tab border-1px-bottom">
       <div class="tab-item">
-        <a v-link="{path:'/goods'}">商品</a>
+        <router-link to="/goods">商品</router-link>
       </div>
       <div class="tab-item">
-        <a v-link="{path:'/ratings'}">评论</a>
+        <router-link to="/ratings">评论</router-link>
       </div>
       <div class="tab-item">
-        <a v-link="{path:'/seller'}">商家</a>
+        <router-link to="/seller">商家</router-link>
       </div>
     </div>
-    <router-view :seller-con="seller" keep-alive></router-view>
+    <keep-alive>
+      <router-view :seller="seller"></router-view>
+    </keep-alive>
   </div>
 </template>
 
-<script>
-  import header from 'components/header/header'
+<script type="text/ecmascript-6">
   import {urlParse} from 'common/js/util'
+  import header from 'components/header/header.vue'
 
   const ERR_OK = 0
 
@@ -28,28 +30,24 @@
         seller: {
           id: (() => {
             let queryParam = urlParse()
-            // console.log(queryParam)
             return queryParam.id
           })()
         }
       }
     },
     created () {
-      this.$http.get('/api/seller?id' + this.seller.id).then((res) => {
-        res = res.body
-        if (res.errno === ERR_OK) {
-          // this.seller = res.data 使用下面的代替
-          this.seller = Object.assign({}, this.seller, res.data)
-          // console.log(this.seller.id) 保证id不会被丢弃
+      this.$http.get('/api/seller?id=' + this.seller.id).then((response) => {
+        response = response.body
+        if (response.errno === ERR_OK) {
+          this.seller = Object.assign({}, this.seller, response.data)
         }
-      }, err => {
-        console.log(err)
       })
     },
     components: {
       'v-header': header
     }
   }
+
 </script>
 
 <style lang="stylus">
@@ -72,11 +70,7 @@
           color:rgb(240,20,20)
         }
        }
-     }
-       
+     }  
   }
-    
-    
-      
-  
 </style>
+
