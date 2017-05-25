@@ -47,12 +47,13 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import axios from 'axios'
   import BScroll from 'better-scroll'
   import shopcart from 'components/shopcart/shopcart'
   import cartcontrol from 'components/cartcontrol/cartcontrol'
   import food from 'components/food/food'
 
-  const ERR_OK = 0
+  // const ERR_OK = 0
 
   export default {
     props: {
@@ -94,15 +95,23 @@
     created () {
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
 
-      this.$http.get('/api/goods').then((response) => {
-        response = response.body
-        if (response.errno === ERR_OK) {
-          this.goods = response.data
-          this.$nextTick(() => { // 保证在dom更新以后
-            this._initScroll()
-            this._calculateHeight()
-          })
-        }
+      // this.$http.get('/api/goods').then((response) => {
+      //   response = response.body
+      //   if (response.errno === ERR_OK) {
+      //     this.goods = response.data
+      //     this.$nextTick(() => { // 保证在dom更新以后
+      //       this._initScroll()
+      //       this._calculateHeight()
+      //     })
+      //   }
+      // })
+
+      axios.get('static/data.json').then((res) => {
+        this.goods = res.data.goods
+        this.$nextTick(() => { // 保证在dom更新以后
+          this._initScroll()
+          this._calculateHeight()
+        })
       })
     },
     methods: {

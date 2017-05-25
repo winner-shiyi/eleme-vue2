@@ -19,10 +19,11 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import axios from 'axios'
   import {urlParse} from 'common/js/util'
   import header from 'components/header/header.vue'
 
-  const ERR_OK = 0
+  // const ERR_OK = 0
 
   export default {
     data () {
@@ -36,11 +37,18 @@
       }
     },
     created () {
-      this.$http.get('/api/seller?id=' + this.seller.id).then((response) => {
-        response = response.body
-        if (response.errno === ERR_OK) {
-          this.seller = Object.assign({}, this.seller, response.data)
+      // this.$http.get('/api/seller?id=' + this.seller.id).then((response) => {
+      //   response = response.body
+      //   if (response.errno === ERR_OK) {
+      //     this.seller = Object.assign({}, this.seller, response.data)
+      //   }
+      // })
+      axios.get('static/data.json', {
+        params: {
+          id: this.seller.id
         }
+      }).then((res) => {
+        this.seller = Object.assign({}, this.seller, res.data.seller)
       })
     },
     components: {
