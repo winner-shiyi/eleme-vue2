@@ -1,5 +1,8 @@
 # 饿了么点餐页面
 
+一个相对还挺复杂的单页应用webApp，实现【饿了么】中点餐相关功能，折腾了挺久，感恩收获，加油^-^
+
+
 > vue-cli、vue2.0、vue-router、axios、webpack、eslint、better-scroll
 
 ## 演示
