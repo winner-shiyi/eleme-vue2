@@ -7,7 +7,7 @@
 
 ## 演示
 
-<a href="http://www.iswn.me/eleme-vue2/#/goods" target="_blank">在线演示</a>
+<a href="http://www.iswn.me/eleme-vue2/#/goods" target="_blank">在线演示</a> （使用chrome浏览器开发者手机演示模式预览效果更佳哦）
 
 ## 安装步骤
 
