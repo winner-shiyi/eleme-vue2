@@ -5,7 +5,7 @@
 
 > vue-cli、vue2.0、vue-router、axios、webpack、eslint、better-scroll
 
-## 演示
+## 演 示
 
 <a href="http://www.iswn.me/eleme-vue2/#/goods" target="_blank">在线演示</a> （使用chrome浏览器开发者手机演示模式预览效果更佳哦）
 
