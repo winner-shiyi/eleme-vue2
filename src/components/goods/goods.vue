@@ -46,7 +46,7 @@
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
   import axios from 'axios'
   import BScroll from 'better-scroll'
   import shopcart from 'components/shopcart/shopcart'
