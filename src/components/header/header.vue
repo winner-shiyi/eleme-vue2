@@ -88,6 +88,7 @@
         this.detailShow = false
       }
     },
+    // 在create生命周期里写一个数组class集合
     created () {
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
     },
