@@ -39,8 +39,12 @@
                         :ratings="food.ratings"></ratingselect>
           <div class="rating-wrapper">
             <ul v-show="food.ratings && food.ratings.length">
-              <li v-show="needShow(rating.rateType,rating.text)" v-for="rating in food.ratings"
-                  class="rating-item border-1px-bottom">
+              <li
+                v-show="needShow(rating.rateType,rating.text)"
+                v-for="(rating, ratIndex) in food.ratings"
+                class="rating-item border-1px-bottom"
+                :key="ratIndex"
+              >
                 <div class="user">
                   <span class="name">{{rating.username}}</span>
                   <img class="avatar" width="12" height="12" :src="rating.avatar">
@@ -163,11 +167,11 @@
     z-index:30
     width:100%
     background:#fff
-    &.move-transition{
+    transform:translate3d(0,0,0)
+    &.move-enter-active, &.move-leave-active{
       transition:all .2s linear
-      transform:translate3d(0,0,0)
     }
-    &.move-enter,&.move-leave{
+    &.move-enter,&.move-leave-active{
       transform:translate3d(100%,0,0)
     }
     .image-header{

@@ -4,7 +4,7 @@
       <div class="menu-wrapper" ref="menuWrapper">
         <ul>
           <li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===index}"
-              @click="selectMenu(index,$event)">
+              @click="selectMenu(index,$event)" :key="index">
           <span class="text border-1px-bottom">
             <span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span>{{item.name}}
           </span>
@@ -13,10 +13,13 @@
       </div>
       <div class="foods-wrapper" ref="foodsWrapper">
         <ul>
-          <li v-for="item in goods" class="food-list" ref="foodList">
+          <li v-for="(item, listIndex) in goods" class="food-list" ref="foodList" :key="listIndex">
             <h1 class="title">{{item.name}}</h1>
             <ul>
-              <li @click="selectFood(food,$event)" v-for="food in item.foods" class="food-item border-1px-bottom">
+              <li 
+                @click="selectFood(food,$event)" v-for="(food, foodIndex) in item.foods"
+                :key="foodIndex"
+                class="food-item border-1px-bottom" >
                 <div class="icon">
                   <img width="57" height="57" :src="food.icon">
                 </div>
@@ -28,7 +31,7 @@
                   </div>
                   <div class="price">
                     <span class="now">￥{{food.price}}</span><span class="old"
-                                                                  v-show="food.oldPrice">￥{{food.oldPrice}}</span>
+                      v-show="food.oldPrice">￥{{food.oldPrice}}</span>
                   </div>
                   <div class="cartcontrol-wrapper">
                     <cartcontrol @add="addFood" :food="food"></cartcontrol>
@@ -108,7 +111,9 @@
 
       axios.get('static/data.json').then((res) => {
         this.goods = res.data.goods
-        this.$nextTick(() => { // 保证在dom更新以后
+        // 在￥nextTick的回调里面才会执行dom更新，这样计算的初始化高度才正确
+        // 因为数据填充的过程是一个异步的，就有可能_initScroll的时候没有高度
+        this.$nextTick(() => {
           this._initScroll()
           this._calculateHeight()
         })
@@ -119,6 +124,7 @@
         if (!event._constructed) {
           return
         }
+        // console.log(index)
         let foodList = this.$refs.foodList
         let el = foodList[index]
         this.foodsScroll.scrollToElement(el, 300)
@@ -139,6 +145,7 @@
           this.$refs.shopcart.drop(target)
         })
       },
+      // new BScroll(接收一个dom， 一个options)
       _initScroll () {
         this.meunScroll = new BScroll(this.$refs.menuWrapper, {
           click: true
@@ -146,11 +153,12 @@
 
         this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
           click: true,
-          probeType: 3
+          probeType: 3 // api表示在滚动的时候能实时的告诉当前位置，y坐标
         })
 
+        // 利用这个api监听scroll，得到y坐标
         this.foodsScroll.on('scroll', (pos) => {
-          this.scrollY = Math.abs(Math.round(pos.y))
+          this.scrollY = Math.abs(Math.round(pos.y)) // 是小数，需要转换整数，并且要是正数
         })
       },
       _calculateHeight () { // 获取右侧商品 每一组的高度
@@ -199,7 +207,7 @@
           background:#Fff
           .text{
             font-weight:700
-            border-none()
+            border-none() 
           }
         }
         .icon{

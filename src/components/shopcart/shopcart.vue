@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="ball-container">
-        <div v-for="ball in balls">
+        <div v-for="(ball,index) in balls" :key="index">
           <transition name="drop" @before-enter="beforeDrop" @enter="dropping" @after-enter="afterDrop">
             <div class="ball" v-show="ball.show">
               <div class="inner inner-hook"></div>
@@ -35,7 +35,7 @@
           </div>
           <div class="list-content" ref="listContent">
             <ul>
-              <li class="food border-1px-bottom" v-for="food in selectFoods">
+              <li class="food border-1px-bottom" v-for="(food, foodIndex) in selectFoods" :key="foodIndex">
                 <span class="name">{{food.name}}</span>
                 <div class="price">
                   <span>￥{{food.price*food.count}}</span>
@@ -158,6 +158,7 @@
     },
     methods: {
       drop (el) {
+        console.log(el)
         for (let i = 0; i < this.balls.length; i++) {
           let ball = this.balls[i]
           if (!ball.show) {
@@ -196,7 +197,7 @@
         while (count--) {
           let ball = this.balls[count]
           if (ball.show) {
-            let rect = ball.el.getBoundingClientRect()
+            let rect = ball.el.getBoundingClientRect() // 获取一个元素相对于视口的位置
             let x = rect.left - 32
             let y = -(window.innerHeight - rect.top - 22)
             el.style.display = ''
